@@ -37,7 +37,7 @@ const LocationInput = ({ onAddMessage, query, setQuery }) => {
 
     return (
 
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: '20px', width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: '10px', width: '100%' }}>
             <Input placeholder="Enter state" value={state} onChange={handleStateChange} style={{ marginRight: '8px' }} />
             <Input placeholder="Enter city" value={city} onChange={handleCityChange} style={{ marginRight: '8px' }} />
             <Input placeholder="eg.Downtown Chinese restaurants" value={optional} onChange={handleOptionalChange} style={{ marginRight: '8px' }} />

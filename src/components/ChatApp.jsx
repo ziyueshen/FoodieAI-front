@@ -36,14 +36,14 @@ const ChatComponent = ({ messages, onAddMessage, setMessages, query, setQuery })
     }, [messages]);
     return (
 
-        <div style={{ width: '100%', padding: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ width: '95%', padding: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div style={{ width: '100%', backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 0 10px #ccc' }}>
                 <div style={{ lineHeight: '50px', borderBottom: '1px solid #ccc' }}>
                     {title}
                 </div>
                 <div
                     ref={chatBoxRef}
-                    style={{ height: '500px', overflow: 'auto', position: 'relative', padding: '5px' }}>
+                    style={{ height: '90%', overflow: 'auto', position: 'relative', padding: '5px', minHeight: '350px' }}>
                     {messages.map((message, index) => (
                         <div key={index} className={message.sender === 'other' ? 'message-left' : 'message-right'}>
                             <div className={message.sender === 'other' ? 'bubble-blue' : 'bubble-green'}>
@@ -58,7 +58,7 @@ const ChatComponent = ({ messages, onAddMessage, setMessages, query, setQuery })
                     ))}
 
                 </div>
-                <div style={{ height: '170px', borderTop: '1px solid #ccc', position: 'relative', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ height: '10%', borderTop: '1px solid #ccc', position: 'relative', display: 'flex', flexDirection: 'column' }}>
                     <div style={{ position: 'absolute', bottom: 0, display: 'flex', justifyContent: 'flex-start', width: '80%', padding: '10px' }}>
                         {messages.length > 0 && (
                             <>
