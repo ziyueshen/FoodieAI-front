@@ -3,7 +3,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { GlobalContext } from './App';
+import { GlobalContext } from '../App';
 
 const Sidebar = ({ user, setUser, showModal, chats, setChats }) => {
   
@@ -13,10 +13,8 @@ const Sidebar = ({ user, setUser, showModal, chats, setChats }) => {
     try {
       await axios.get(`${apiBaseUrl}/users/logout`);
       console.log('After logout request');
-      // 清除保存的令牌
       localStorage.removeItem('authToken');
-      setUser(null); // 清除用户信息
-      //navigate('/login'); // 导航到登录页面
+      setUser(null); // clear the user state
     } catch (error) {
       console.error('Error logging out', error);
     }
@@ -25,7 +23,6 @@ const Sidebar = ({ user, setUser, showModal, chats, setChats }) => {
     if (!user) {
       alert('Please log in first!');
     } else {
-      // 获取用户信息
       const authToken = localStorage.getItem('authToken');
       axios.get(`${apiBaseUrl}/chats/history`,
         {
@@ -58,11 +55,11 @@ const Sidebar = ({ user, setUser, showModal, chats, setChats }) => {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
-      boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.5)' // 添加阴影效果
+      boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.5)' // add shadow
     }}>
       <Menu mode="vertical" theme="light" style={{ backgroundColor: 'transparent' }}>
         <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
-        <Menu.Item key="2"><Link to="/new-chat">New Chat</Link></Menu.Item>
+        <Menu.Item key="2"><Link to="/new-chat">Chat</Link></Menu.Item>
         {user ? (
           <Menu.Item key="3" onClick={handleLogout}>Log out</Menu.Item>
         ) : (

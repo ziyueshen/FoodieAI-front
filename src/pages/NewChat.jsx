@@ -1,9 +1,9 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import ChatApp from './ChatApp'
-import LocationInput from './LocationInput'
+import ChatApp from '../components/ChatApp'
+import LocationInput from '../components/LocationInput'
 import axios from 'axios';
 import { Card, Button } from 'antd';
-import { GlobalContext } from './App';
+import { GlobalContext } from '../App';
 
 const NewChat = ({ messages, setMessages, onAddMessage, query, setQuery, user }) => {
     const apiBaseUrl = useContext(GlobalContext);
@@ -30,34 +30,46 @@ const NewChat = ({ messages, setMessages, onAddMessage, query, setQuery, user })
                         setShowSavedMessage(response.data.success);
                         setTimeout(() => {
                             setShowSavedMessage(false);
-                        }, 2000); // 2秒后隐藏保存成功消息
+                        }, 2000); // in 2 seconds, hide the message
                     })
                     .catch(error => {
                         console.error('Error sending messages:', error);
                     });
             }
-            
+
         }
     };
 
     return (
         <div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <div style={{ width: '25%', height: '230px', display: 'flex', marginTop: '85px' }}>
-                    <Card style={{ backgroundColor: '#F3E9FF', textAlign: 'left', borderRadius: '10px', boxShadow: '0 0 10px #ccc' }}>
-                        <ul style={{ padding: 0, margin: 0, textAlign: 'left' }}>
-                            <li>I am Foodie AI. Enter the cuisine you're interested in into the input box</li>
-                            <li>I will retrieve real-time information from Google Maps and provide feedback</li>
-                            <li>You can further inquire about specific details you're interested in</li>
-                        </ul>
-                        <div style={{ marginTop: '15px' }}>
+                <div style={{ flex: '0 0 25%', height: '35%', display: 'flex', marginTop: '65px' }}>
+                    <Card
+                        style={{
+                            backgroundColor: '#F3E9FF',
+                            textAlign: 'left',
+                            borderRadius: '10px',
+                            boxShadow: '0 0 10px #ccc',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            minHeight: '200px', 
+                        }}
+                    >
+                        <div style={{ padding: '10px' }}> 
+                            <ul style={{ padding: 0, margin: 0, textAlign: 'left' }}>
+                                <li>Enter the state, city, and type of food you're interested in, then click "Explore🔍"</li>
+                                <li>I will retrieve real-time information from Google Maps and provide feedback</li>
+                                <li>You can further inquire about specific details you're interested in</li>
+                            </ul>
+                        </div>
+                        <div style={{ marginTop: 'auto', padding: '10px' }}> 
                             <Button type="primary" onClick={handleSave}>Save chat</Button>
                             <span style={{ marginRight: '10px' }}></span>
                             <Button type="default" onClick={handleClear}>Clear chat</Button>
                         </div>
                     </Card>
                 </div>
-                <div style={{ width: '75%', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ flex: '1 1 75%', height: '65%', display: 'flex', flexDirection: 'column' }}>
                     <LocationInput onAddMessage={onAddMessage} query={query} setQuery={setQuery} />
                     <ChatApp messages={messages} onAddMessage={onAddMessage} setMessages={setMessages} query={query} setQuery={setQuery} />
                 </div>

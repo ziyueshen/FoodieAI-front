@@ -13,13 +13,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.global-background {
-  background-image: url('https://source.unsplash.com/collection/483251');
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  opacity: 0.5; /* 设置透明度为50% */
-}
 
 a {
   font-weight: 500;

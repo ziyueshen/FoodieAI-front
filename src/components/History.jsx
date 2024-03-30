@@ -4,7 +4,7 @@ import Button from "antd/es/button";
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { GlobalContext } from './App';
+import { GlobalContext } from '../App';
 const History = ({user, isModalVisible, setIsModalVisible, chats, messages, setMessages}) => {
     const apiBaseUrl = useContext(GlobalContext);
 

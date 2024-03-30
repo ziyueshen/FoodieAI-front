@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect, createContext, useContext } from 'react';
 import { Layout } from 'antd';
 
-import './ChatApp.css';
+import '../style/ChatApp.css';
 import axios from 'axios';
 import LocationInput from './LocationInput';
-import { GlobalContext } from './App';
+import { GlobalContext } from '../App';
 
 const ChatComponent = ({ messages, onAddMessage, setMessages, query, setQuery }) => {
     const apiBaseUrl = useContext(GlobalContext);
@@ -31,7 +31,7 @@ const ChatComponent = ({ messages, onAddMessage, setMessages, query, setQuery })
     }
     const chatBoxRef = useRef(null);
     useEffect(() => {
-        // 在每次消息更新时滚动到底部
+        // scroll to the bottom of the chat box
         chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }, [messages]);
     return (

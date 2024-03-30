@@ -1,12 +1,12 @@
 import { Card, Collapse } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { GlobalContext } from './App';
+import { GlobalContext } from '../App';
 import React, { useState, useEffect, createContext, useContext } from 'react';
-const Home = ({onAddMessage, setQuery}) => {
+const Home = ({ onAddMessage, setQuery }) => {
   const apiBaseUrl = useContext(GlobalContext);
   const navigate = useNavigate();
-  const intro = ['How can it help you?', 'How does it work?', 'What makes it different from GenAI?'];
+  const intro = ['🍽️ Let the AI assistant find the best restaurant for you!', '🛠️ How does it work?', '💡 Is it different from normal GenAI?'];
   const intro_ans = [
     [
       'It integrates real-time restaurant reviews and other information from Google Maps;',
@@ -20,18 +20,17 @@ const Home = ({onAddMessage, setQuery}) => {
       'GenAI\'s information comes from publicly available sources from some time ago;',
       'GenAI does not have real-time data or customer reviews.']
   ];
-  const questions = ['Ask about a type of cuisine', 'Ask about a restaurant', 'Ask about your favorite food'];
+  const questions = ['Any Italian food recommended?', 'How is this restaurant?', 'Where can I find delicious tacos?'];
   const choices = ['MA, Boston, Cambridge Italian food', 'NY, New York, Shanghai 21', 'CA, Los Angeles, Santa Monica tacos'];
   const handleCardClick = (index) => {
     const location = choices[index];
     setQuery(location);
-    onAddMessage({ sender: 'other', text: 'Summarizing information about ' + location + ', may take a few seconds...'});
+    onAddMessage({ sender: 'other', text: 'Summarizing information about ' + location + ', may take a few seconds...' });
     axios.post(`${apiBaseUrl}/api/sum`, { location })
       .then(response => {
         onAddMessage({ sender: 'other', text: response.data });
       })
       .catch(error => {
-        // 处理错误
         onAddMessage({ sender: 'other', text: "😞Insufficient data, please try searching for other cuisines." });
         console.error('Error:', error);
       });
@@ -41,7 +40,27 @@ const Home = ({onAddMessage, setQuery}) => {
   return (
     <div>
       <h1>Foodie AI</h1>
+      <h3></h3>
+      <h3>👇Click on any card to discover top restaurants in the area</h3>
+      <div style={{ display: 'flex', gap: '20px', padding: '20px' }}>
+  {Array.from({ length: 3 }, (_, index) => (
+    <Card
+      key={index}
+      title={questions[index]}
+      style={{
+        minWidth: 'calc(90% / 3)', 
+        borderRadius: '5px',
+        boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.1)',
+        padding: '10px'
+      }}
+    >
       
+      <button onClick={() => handleCardClick(index)}>
+        <span>{choices[index]}</span>
+      </button>
+    </Card>
+  ))}
+</div>
       <Collapse>
         {intro.map((question, index) => (
           <Collapse.Panel
@@ -58,17 +77,7 @@ const Home = ({onAddMessage, setQuery}) => {
 
         ))}
       </Collapse>
-      <h3>Click any card👇 to give it a try</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
-        {/* 生成卡片 */}
-        {Array.from({ length: 3 }, (_, index) => (
-          <Card key={index} title={questions[index]} style={{ borderRadius: '5px', boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.1)' }}>
-            <button onClick={() => handleCardClick(index)}>
-              <span>{choices[index]}</span>
-            </button>
-          </Card>
-        ))}
-      </div>
+      
     </div>
   );
 }

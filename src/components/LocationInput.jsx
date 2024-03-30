@@ -2,7 +2,7 @@
 import React, { useState, createContext, useContext } from 'react';
 import { Input, Button } from 'antd';
 import axios from 'axios';
-import { GlobalContext } from './App';
+import { GlobalContext } from '../App';
 const LocationInput = ({ onAddMessage, query, setQuery }) => {
     const apiBaseUrl = useContext(GlobalContext);
     const [state, setState] = useState('');
@@ -30,11 +30,9 @@ const LocationInput = ({ onAddMessage, query, setQuery }) => {
                 onAddMessage({ sender: 'other', text: response.data });
             })
             .catch(error => {
-                // 处理错误
                 console.error('Error:', error);
                 onAddMessage({ sender: 'other', text: "😞Insufficient data, please try searching for other cuisines." });
             });
-        console.log('Searching for state:', state, 'and city:', city);
     };
 
     return (
@@ -42,7 +40,7 @@ const LocationInput = ({ onAddMessage, query, setQuery }) => {
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: '20px', width: '100%' }}>
             <Input placeholder="Enter state" value={state} onChange={handleStateChange} style={{ marginRight: '8px' }} />
             <Input placeholder="Enter city" value={city} onChange={handleCityChange} style={{ marginRight: '8px' }} />
-            <Input placeholder="Optional, eg. Downtown Chinese cuisine." value={optional} onChange={handleOptionalChange} style={{ marginRight: '8px' }} />
+            <Input placeholder="eg.Downtown Chinese restaurants" value={optional} onChange={handleOptionalChange} style={{ marginRight: '8px' }} />
             <Button type="primary" onClick={handleSearch}>
                 Explore🔍
             </Button>

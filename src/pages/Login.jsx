@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useContext, createContext } from 'react';
 import axios from 'axios';
 import { Alert } from 'antd';
-import { GlobalContext } from './App';
+import { GlobalContext } from '../App';
 
 const Login = ({ user, fetchUser }) => {
     const apiBaseUrl = useContext(GlobalContext);
@@ -16,10 +16,8 @@ const Login = ({ user, fetchUser }) => {
             .then(response => {
                 navigate('/');
                 const token = response.data.token;
-
-                // 将令牌保存在 localStorage 中
                 localStorage.setItem('authToken', token);
-                // 登录成功，刷新用户信息
+                // fetch user data when the app starts
                 fetchUser();
             })
             .catch(error => {

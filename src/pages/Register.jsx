@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, createContext, useContext } from 'react';
 import { Alert } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { GlobalContext } from './App';
+import { GlobalContext } from '../App';
 const Register = () => {
     const apiBaseUrl = useContext(GlobalContext);
     const [response, setResponse] = useState(null);

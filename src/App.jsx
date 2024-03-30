@@ -1,14 +1,14 @@
 
 import { useState, useEffect, createContext, useContext } from 'react'
 import { Layout, Modal } from 'antd';
-import Sidebar from './sidebar';
-import './App.css'
+import Sidebar from './components/sidebar';
+import './style/App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './Home';
-import NewChat from './NewChat';
-import History from './History';
-import Login from './Login';
-import Register from './Register';
+import Home from './pages/Home';
+import NewChat from './pages/NewChat';
+import History from './components/History';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
@@ -29,7 +29,6 @@ function App() {
     setIsModalVisible(true);
   };
 
-  // 获取用户信息
   const fetchUser = async () => {
     try {
       const authToken = localStorage.getItem('authToken');
@@ -52,7 +51,7 @@ function App() {
   };
 
   useEffect(() => {
-    // 组件加载时获取用户信息
+    // fetch user data when the app starts
     fetchUser();
   }, []);
 
@@ -61,17 +60,23 @@ function App() {
     <div>
       <GlobalContext.Provider value={apiBaseUrl}>
         <Router>
-          <Sider><Sidebar user={user} setUser={setUser} showModal={showModal} chats={chats} setChats={setChats} /></Sider>
+          <div style={{ display: 'flex' }}>
+            <Sider style={{ flex: '0 0 auto' }}>
+              <Sidebar user={user} setUser={setUser} showModal={showModal} chats={chats} setChats={setChats} />
+            </Sider>
 
-          <Routes>
-            <Route path="/" element={<Home onAddMessage={addMessage} setQuery={setQuery} />} />
-            <Route path="/new-chat" element={
-              <NewChat messages={messages} setMessages={setMessages} onAddMessage={addMessage} query={query} setQuery={setQuery} user={user} />
-            } />
-            <Route path="/history" element={<History />} />
-            <Route path="/login" element={<Login user={user} fetchUser={fetchUser} />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
+            <div style={{ flex: '1 1 auto' }}>
+              <Routes>
+                <Route path="/" element={<Home onAddMessage={addMessage} setQuery={setQuery} />} />
+                <Route path="/new-chat" element={
+                  <NewChat messages={messages} setMessages={setMessages} onAddMessage={addMessage} query={query} setQuery={setQuery} user={user} />
+                } />
+                <Route path="/history" element={<History />} />
+                <Route path="/login" element={<Login user={user} fetchUser={fetchUser} />} />
+                <Route path="/register" element={<Register />} />
+              </Routes>
+            </div>
+          </div>
           <History user={user} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} chats={chats} message={messages} setMessages={setMessages} />
         </Router>
       </GlobalContext.Provider>
